@@ -8,11 +8,26 @@ RUN apt-get update && \
 
 COPY . /tmp/
 
-RUN cd /tmp && bash -c "/tmp/install-mysql.sh"
+RUN cd /tmp && bash -c "/tmp/install-mysql.sh" && \
+    cp -r /tmp/target /root/  && \
+    groupadd tomcat   && \
+    useradd -s /bin/false -g tomcat -d /opt/tomcat tomcat   && \
+    cd /tmp  && \
+    curl -O http://apache.mirrors.ionfish.org/tomcat/tomcat-8/v8.5.5/bin/apache-tomcat-8.5.5.tar.gz  && \
+    mkdir /opt/tomcat  && \
+    tar xzvf apache-tomcat-8*tar.gz -C /opt/tomcat --strip-components=1 && \
+    cd /opt/tomcat && \
+    chgrp -R tomcat /opt/tomcat && \
+    chmod -R g+r conf && \
+    chmod g+x conf  && \
+    chown -R tomcat webapps/ work/ temp/ logs/
+
 
 WORKDIR /data
 
 ENV JAVA_HOME /usr/lib/jvm/default-java
+
+COPY . /tmp/
 
 RUN rm -rf /tmp/*
 
