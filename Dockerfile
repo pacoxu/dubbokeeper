@@ -20,8 +20,11 @@ RUN cd /tmp && bash -c "/tmp/install-mysql.sh" && \
     chgrp -R tomcat /opt/tomcat && \
     chmod -R g+r conf && \
     chmod g+x conf  && \
-    chown -R tomcat webapps/ work/ temp/ logs/
+    chown -R tomcat webapps/ work/ temp/ logs/ && \
+    cp /root/target/mysql-dubbokeeper-ui/dubbokeeper-ui-1.0.1.war /opt/tomcat/webapps/ && \
 
+ENV CATALINA_HOME /opt/tomcat
+ENV PATH $CATALINA_HOME/bin:$PATH
 
 WORKDIR /data
 
@@ -31,4 +34,4 @@ COPY . /tmp/
 
 RUN rm -rf /tmp/*
 
-CMD ["bash"]
+CMD ["/opt/tomcat/catalina.sh", "run"]
