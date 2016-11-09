@@ -3,7 +3,7 @@ FROM ubuntu:16.04
 MAINTAINER Paco.Xu <paco.xu@daocloud.io>
 
 RUN apt-get update && \
-    apt-get install -y  maven git default-jdk && \
+    apt-get install -y  maven git default-jdk curl && \
     rm -rf /var/lib/apt/lists/*
 
 COPY . /tmp/
