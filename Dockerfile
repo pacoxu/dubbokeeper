@@ -6,12 +6,14 @@ RUN apt-get update && \
     apt-get install -y  maven git default-jdk && \
     rm -rf /var/lib/apt/lists/*
 
-ADD install-mysql.sh /
+COPY . /tmp/
 
-RUN bash -c "/install-mysql.sh"
+RUN bash -c "/tmp/install-mysql.sh"
 
 WORKDIR /data
 
 ENV JAVA_HOME /usr/lib/jvm/default-java
+
+RUN rm -rf /tmp/*
 
 CMD ["bash"]
