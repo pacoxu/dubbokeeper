@@ -8,7 +8,7 @@ RUN apt-get update && \
 
 COPY . /tmp/
 
-RUN bash -c "/tmp/install-mysql.sh"
+RUN cd /tmp && bash -c "/tmp/install-mysql.sh"
 
 WORKDIR /data
 
